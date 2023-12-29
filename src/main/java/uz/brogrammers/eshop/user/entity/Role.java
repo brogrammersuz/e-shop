@@ -1,9 +1,11 @@
 package uz.brogrammers.eshop.user.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import org.hibernate.annotations.NaturalId;
 
 @Entity
+@Getter
 @Table(name = "role")
 public class Role {
 

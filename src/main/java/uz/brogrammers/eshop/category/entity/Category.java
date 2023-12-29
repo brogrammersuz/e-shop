@@ -3,11 +3,13 @@ package uz.brogrammers.eshop.category.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "category")
 @AllArgsConstructor
 @Getter
+@NoArgsConstructor
 public class Category {
 
     @Id

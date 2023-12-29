@@ -2,14 +2,18 @@ package uz.brogrammers.eshop.product.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
+@Builder
 @Entity
 @Table(name = "product")
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class Product {
 
     @Id
