@@ -7,6 +7,7 @@ import uz.brogrammers.eshop.product.model.ProductModel;
 import uz.brogrammers.eshop.product.repository.ProductRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +21,12 @@ public class ProductService {
                 .toList();
     }
 
-    public void addProduct(ProductModel productModel) {
+    public Optional<ProductModel> findById(Integer id) {
+        return productRepository.findById(id)
+                .map(ProductMapper::mapToModel);
+    }
+
+    public void saveProduct(ProductModel productModel) {
         var entity = ProductMapper.mapToEntity(productModel);
         productRepository.save(entity);
     }

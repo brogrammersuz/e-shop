@@ -8,6 +8,7 @@ import uz.brogrammers.eshop.common.property.FileStorageProperty;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -46,6 +47,17 @@ public class FileStorageService {
 
         } catch (IOException ex) {
             throw new FileNotFoundException("Couldn't store file " + fileName + ". Please try again!");
+        }
+    }
+
+    public void deleteFile(String fileName) throws FileNotFoundException {
+        try{
+            Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
+            Files.deleteIfExists(filePath);
+        }catch (MalformedURLException ex){
+            throw new FileNotFoundException("File not found "+ fileName);
+        }catch (IOException ex){
+            throw new IllegalArgumentException("File couldn't not be deleted "+ fileName);
         }
     }
 

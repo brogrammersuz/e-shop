@@ -2,7 +2,7 @@
 
 -- changeset Khasanboy-Akbarov:create-category-table
 -- preconditions onFail:MARK_RAN
--- precondition-sql-check expectedResult:0 select count(*) from information_schema.TABLES where TABLE_NAME='eshop.category';
+-- precondition-sql-check expectedResult:0 select count(*) from information_schema.TABLES WHERE TABLE_SCHEMA = 'eshop' AND TABLE_NAME='category';
 CREATE TABLE `eshop`.`category` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE `eshop`.`category` (
 
 -- changeset Khasanboy-Akbarov:create-product-table
 -- preconditions onFail:MARK_RAN
--- precondition-sql-check expectedResult:0 select count(*) from information_schema.TABLES where TABLE_NAME='eshop.product';
+-- precondition-sql-check expectedResult:0 select count(*) from information_schema.TABLES WHERE TABLE_SCHEMA = 'eshop' AND TABLE_NAME='product';
 CREATE TABLE `eshop`.`product` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE `eshop`.`product` (
 
 -- changeset Khasanboy-Akbarov:create-order-table
 -- preconditions onFail:MARK_RAN
--- precondition-sql-check expectedResult:0 select count(*) from information_schema.TABLES where TABLE_NAME='eshop.order';
+-- precondition-sql-check expectedResult:0 select count(*) from information_schema.TABLES WHERE TABLE_SCHEMA = 'eshop' AND TABLE_NAME='order';
 CREATE TABLE `eshop`.`order` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `created` DATETIME NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE `eshop`.`order` (
 
 -- changeset Khasanboy-Akbarov:create-order-item-table
 -- preconditions onFail:MARK_RAN
--- precondition-sql-check expectedResult:0 select count(*) from information_schema.TABLES where TABLE_NAME='eshop.order_item';
+-- precondition-sql-check expectedResult:0 select count(*) from information_schema.TABLES WHERE TABLE_SCHEMA = 'eshop' AND TABLE_NAME='order_item';
 CREATE TABLE `eshop`.`order_item` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `quantity` INT NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE `eshop`.`order_item` (
 
 -- changeset Khasanboy-Akbarov:create-order-items-table
 -- preconditions onFail:MARK_RAN
--- precondition-sql-check expectedResult:0 select count(*) from information_schema.TABLES where TABLE_NAME='eshop.order_items';
+-- precondition-sql-check expectedResult:0 select count(*) from information_schema.TABLES WHERE TABLE_SCHEMA = 'eshop' AND TABLE_NAME='order_items';
  CREATE TABLE `eshop`.`order_items` (
       `item_id` INT NOT NULL,
       `order_id` INT NOT NULL,
@@ -60,14 +60,15 @@ CREATE TABLE `eshop`.`order_item` (
 
 -- changeset Khasanboy-Akbarov:create-shopping-cart-table
 -- preconditions onFail:MARK_RAN
--- precondition-sql-check expectedResult:0 select count(*) from information_schema.TABLES where TABLE_NAME='eshop.shopping_cart';
+-- precondition-sql-check expectedResult:0 select count(*) from information_schema.TABLES WHERE TABLE_SCHEMA = 'eshop' AND TABLE_NAME='shopping_cart';
 CREATE TABLE `eshop`.`shopping_cart` (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `created` DATETIME NOT NULL,
   PRIMARY KEY (`id`));
 
 -- changeset Khasanboy-Akbarov:create-shopping-cart-item-table
 -- preconditions onFail:MARK_RAN
--- precondition-sql-check expectedResult:0 select count(*) from information_schema.TABLES where TABLE_NAME='eshop.shopping_cart_item';
+-- precondition-sql-check expectedResult:0 select count(*) from information_schema.TABLES WHERE TABLE_SCHEMA = 'eshop' AND TABLE_NAME='shopping_cart_item';
 CREATE TABLE `eshop`.`shopping_cart_item` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `quantity` INT NOT NULL,
@@ -76,7 +77,7 @@ CREATE TABLE `eshop`.`shopping_cart_item` (
 
 -- changeset Khasanboy-Akbarov:create-cart-items-table
 -- preconditions onFail:MARK_RAN
--- precondition-sql-check expectedResult:0 select count(*) from information_schema.TABLES where TABLE_NAME='eshop.cart_items';
+-- precondition-sql-check expectedResult:0 select count(*) from information_schema.TABLES WHERE TABLE_SCHEMA = 'eshop' AND TABLE_NAME='cart_items';
  CREATE TABLE `eshop`.`cart_items` (
       `cart_item_id` INT NOT NULL,
       `cart_id` INT NOT NULL,
@@ -95,7 +96,7 @@ CREATE TABLE `eshop`.`shopping_cart_item` (
 
 -- changeset Khasanboy-Akbarov:create-shipping-table
 -- preconditions onFail:MARK_RAN
--- precondition-sql-check expectedResult:0 select count(*) from information_schema.TABLES where TABLE_NAME='eshop.shipping';
+-- precondition-sql-check expectedResult:0 select count(*) from information_schema.TABLES WHERE TABLE_SCHEMA = 'eshop' AND TABLE_NAME='shipping';
 CREATE TABLE `eshop`.`shipping` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NULL,
@@ -106,7 +107,7 @@ CREATE TABLE `eshop`.`shipping` (
 
 -- changeset Khasanboy-Akbarov:create-role-table
 -- preconditions onFail:MARK_RAN
--- precondition-sql-check expectedResult:0 select count(*) from information_schema.TABLES where TABLE_NAME='eshop.role';
+-- precondition-sql-check expectedResult:0 select count(*) from information_schema.TABLES WHERE TABLE_SCHEMA = 'eshop' AND TABLE_NAME='role';
 CREATE TABLE `eshop`.`role` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
@@ -114,7 +115,7 @@ CREATE TABLE `eshop`.`role` (
 
 -- changeset Khasanboy-Akbarov:create-user-table
 -- preconditions onFail:MARK_RAN
--- precondition-sql-check expectedResult:0 select count(*) from information_schema.TABLES where TABLE_NAME='eshop.user';
+-- precondition-sql-check expectedResult:0 select count(*) from information_schema.TABLES WHERE TABLE_SCHEMA = 'eshop' AND TABLE_NAME='user';
 CREATE TABLE `eshop`.`user` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `created` DATETIME NOT NULL,
@@ -126,7 +127,7 @@ CREATE TABLE `eshop`.`user` (
 
 -- changeset Khasanboy-Akbarov:create-user_roles-table
 -- preconditions onFail:MARK_RAN
--- precondition-sql-check expectedResult:0 select count(*) from information_schema.TABLES where TABLE_NAME='eshop.user_roles';
+-- precondition-sql-check expectedResult:0 select count(*) from information_schema.TABLES WHERE TABLE_SCHEMA = 'eshop' AND TABLE_NAME='user_roles';
  CREATE TABLE `eshop`.`user_roles` (
       `user_id` INT NOT NULL,
       `role_id` INT NOT NULL,

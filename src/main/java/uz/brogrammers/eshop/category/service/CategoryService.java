@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import uz.brogrammers.eshop.category.entity.Category;
 import uz.brogrammers.eshop.category.repository.CategoryRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -12,6 +13,10 @@ import java.util.Optional;
 public class CategoryService {
 
     private final CategoryRepository repository;
+
+    public List<Category> findAll(){
+        return repository.findAll();
+    }
 
     public Optional<Category> findById(Integer id){
         return repository.findById(id);
