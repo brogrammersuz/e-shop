@@ -3,7 +3,7 @@ package uz.brogrammers.eshop.shoppingcart.rest.dto;
 import lombok.Data;
 
 @Data
-public class CreateShoppingCartItemRequest {
+public class CreateCartItemRequest {
 
     private Integer id;
 
@@ -11,7 +11,7 @@ public class CreateShoppingCartItemRequest {
 
     private Integer productId;
 
-    public CreateShoppingCartItemRequest(Integer id, Integer quantity, Integer productId) {
+    public CreateCartItemRequest(Integer id, Integer quantity, Integer productId) {
         this.id = id;
         this.quantity = quantity;
         this.productId = productId;
