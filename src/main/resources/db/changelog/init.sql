@@ -19,10 +19,10 @@ CREATE TABLE `eshop`.`product` (
   `image_url` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`));
 
--- changeset Khasanboy-Akbarov:create-order-table
+-- changeset Khasanboy-Akbarov:create-orders-table
 -- preconditions onFail:MARK_RAN
--- precondition-sql-check expectedResult:0 select count(*) from information_schema.TABLES WHERE TABLE_SCHEMA = 'eshop' AND TABLE_NAME='order';
-CREATE TABLE `eshop`.`order` (
+-- precondition-sql-check expectedResult:0 select count(*) from information_schema.TABLES WHERE TABLE_SCHEMA = 'eshop' AND TABLE_NAME='orders';
+CREATE TABLE `eshop`.`orders` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `created` DATETIME NOT NULL,
   `user_id` INT NOT NULL,
@@ -39,22 +39,22 @@ CREATE TABLE `eshop`.`order_item` (
   `product_id` INT NOT NULL,
   PRIMARY KEY (`id`));
 
--- changeset Khasanboy-Akbarov:create-order-items-table
+-- changeset Khasanboy-Akbarov:create-orders-order-items-table
 -- preconditions onFail:MARK_RAN
--- precondition-sql-check expectedResult:0 select count(*) from information_schema.TABLES WHERE TABLE_SCHEMA = 'eshop' AND TABLE_NAME='order_items';
- CREATE TABLE `eshop`.`order_items` (
-      `item_id` INT NOT NULL,
+-- precondition-sql-check expectedResult:0 select count(*) from information_schema.TABLES WHERE TABLE_SCHEMA = 'eshop' AND TABLE_NAME='orders_order_items';
+ CREATE TABLE `eshop`.`orders_order_items` (
       `order_id` INT NOT NULL,
-      PRIMARY KEY (`item_id`, `order_id`),
+      `order_item_id` INT NOT NULL,
+      PRIMARY KEY (`order_id`, `order_item_id`),
       INDEX `order_id_idx` (`order_id` ASC) VISIBLE,
-      CONSTRAINT `item_id`
-        FOREIGN KEY (`item_id`)
+      CONSTRAINT `order_item_id`
+        FOREIGN KEY (`order_item_id`)
         REFERENCES `eshop`.`order_item` (`id`)
         ON DELETE NO ACTION
         ON UPDATE NO ACTION,
       CONSTRAINT `order_id`
         FOREIGN KEY (`order_id`)
-        REFERENCES `eshop`.`order` (`id`)
+        REFERENCES `eshop`.`orders` (`id`)
         ON DELETE NO ACTION
         ON UPDATE NO ACTION);
 
