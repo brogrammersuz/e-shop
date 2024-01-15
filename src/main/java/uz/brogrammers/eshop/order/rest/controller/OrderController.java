@@ -8,11 +8,14 @@ import uz.brogrammers.eshop.order.entity.Order;
 import uz.brogrammers.eshop.order.rest.dto.CreateOrderRequest;
 import uz.brogrammers.eshop.order.service.OrderItemService;
 import uz.brogrammers.eshop.order.service.OrderService;
+import uz.brogrammers.eshop.product.model.ProductModel;
+import uz.brogrammers.eshop.product.service.ProductService;
 import uz.brogrammers.eshop.shipping.entity.Shipping;
 import uz.brogrammers.eshop.shipping.service.ShippingService;
 import uz.brogrammers.eshop.user.entity.User;
 import uz.brogrammers.eshop.user.service.UserService;
 
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -25,6 +28,8 @@ public class OrderController {
     private final OrderItemService orderItemService;
     private final UserService userService;
     private final ShippingService shippingService;
+
+    private final ProductService productService;
 
     @GetMapping("/user/{userId}")
     public List<Order> getOrdersByUserId(@PathVariable Integer userId) {
@@ -58,7 +63,10 @@ public class OrderController {
 
         request.getItems().stream()
                 .forEach(orderItem ->
-                        orderItem.setId(orderItemService.save(orderItem).getId()));
+                {
+                    orderItem.setPrice(getProductPrice(orderItem.getProductId()));
+                    orderItem.setId(orderItemService.save(orderItem).getId());
+                });
 
         Order order = Order.builder()
                 .items(request.getItems())
@@ -68,6 +76,12 @@ public class OrderController {
                 .build();
 
         return orderService.save(order);
+    }
+
+    private BigDecimal getProductPrice(Integer productId) {
+        return productService.findById(productId)
+                .map(ProductModel::getPrice)
+                .orElseThrow();
     }
 
 

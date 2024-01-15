@@ -1,8 +1,10 @@
 package uz.brogrammers.eshop.order.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.ZonedDateTime;
 import java.util.HashSet;
@@ -12,6 +14,8 @@ import java.util.Set;
 @Table(name = "orders")
 @Getter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Order {
 
     @Id

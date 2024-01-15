@@ -1,11 +1,7 @@
 package uz.brogrammers.eshop.order.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import uz.brogrammers.eshop.product.entity.Product;
+import lombok.*;
 
 import java.math.BigDecimal;
 
@@ -15,6 +11,7 @@ import java.math.BigDecimal;
 @Builder
 @Getter
 @Setter
+@NoArgsConstructor
 public class OrderItem {
 
     @Id
@@ -27,7 +24,7 @@ public class OrderItem {
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 
-    @Column(name="product_id", nullable = false)
+    @Column(name = "product_id", nullable = false)
     private Integer productId;
 
 }

@@ -27,7 +27,7 @@ public class ProductController {
 
     private final FileStorageService fileStorageService;
 
-    @GetMapping("/all")
+    @GetMapping("/")
     public List<ProductResponse> getAll() {
         return productService.getAllProducts().stream()
                 .map(ProductMapper::mapToDto)

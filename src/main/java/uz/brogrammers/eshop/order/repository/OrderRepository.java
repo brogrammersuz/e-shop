@@ -12,14 +12,14 @@ import java.util.Optional;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 
-    @Query(value = "Select * from `order` where user_id = :userId", nativeQuery = true)
+    @Query(value = "Select * from `orders` where user_id = :userId", nativeQuery = true)
     List<Order> findAllByUserId(@Param("userId") Integer userId);
 
-    @Query(value = "Select * from `order` where id= :id", nativeQuery = true)
+    @Query(value = "Select * from `orders` where id= :id", nativeQuery = true)
     Optional<Order> findById(@Param("id") Integer id);
 
     @Override
-    @Query(value = "Select * from `order`", nativeQuery = true)
+    @Query(value = "Select * from `orders`", nativeQuery = true)
     List<Order> findAll();
 
 }
