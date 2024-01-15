@@ -13,7 +13,7 @@ CREATE TABLE `eshop`.`category` (
 -- precondition-sql-check expectedResult:0 select count(*) from information_schema.TABLES WHERE TABLE_SCHEMA = 'eshop' AND TABLE_NAME='product';
 CREATE TABLE `eshop`.`product` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(255) NOT NULL,
+  `title` VARCHAR(255) NOT NULL,
   `price` DECIMAL NOT NULL,
   `category_id` INT NOT NULL,
   `image_url` VARCHAR(255) NOT NULL,

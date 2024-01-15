@@ -43,7 +43,7 @@ public class ProductController {
     }
 
     @PostMapping("/")
-    public void addProduct(@RequestParam("file") MultipartFile file, @RequestParam("name") String name,
+    public void addProduct(@RequestParam("file") MultipartFile file, @RequestParam("title") String title,
                            @RequestParam BigDecimal price, @RequestParam Integer categoryId) throws FileNotFoundException {
 
         Category category = categoryService.findById(categoryId).orElseThrow(() -> new IllegalArgumentException("Invalid category is selected"));
@@ -51,7 +51,7 @@ public class ProductController {
 
         var productModel = ProductModel.builder()
                 .categoryId(categoryId)
-                .name(name)
+                .title(title)
                 .price(price)
                 .imageUrl(imageUrl)
                 .build();
@@ -63,7 +63,7 @@ public class ProductController {
     @PutMapping("/{id}")
     public void updateProduct(@PathVariable("id") Integer id,
                               @RequestParam(value = "file", required = false) MultipartFile file,
-                              @RequestParam("name") String name,
+                              @RequestParam("title") String title,
                               @RequestParam("price") BigDecimal price,
                               @RequestParam("categoryId") Integer categoryId)
             throws FileNotFoundException {
@@ -82,7 +82,7 @@ public class ProductController {
 
         var productModel = ProductModel.builder()
                 .id(id)
-                .name(name)
+                .title(title)
                 .price(price)
                 .categoryId(categoryId)
                 .imageUrl(file != null ? "http://localhost:8081/api/files/download/" + fileName : oldProduct.getImageUrl())

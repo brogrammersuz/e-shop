@@ -1,6 +1,5 @@
 package uz.brogrammers.eshop.product.model;
 
-import jakarta.persistence.Column;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -11,7 +10,7 @@ import java.math.BigDecimal;
 public class ProductModel {
 
     private Integer id;
-    private String name;
+    private String title;
     private BigDecimal price;
     private Integer categoryId;
     private String imageUrl;

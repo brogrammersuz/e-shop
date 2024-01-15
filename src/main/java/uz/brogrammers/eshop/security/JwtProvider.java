@@ -26,7 +26,8 @@ public class JwtProvider {
 
         return Jwts.builder()
                 .setSubject(userPrincipal.getUsername())
-                .claim("isAdmin", userPrincipal.isAdmin())
+                .claim("userId", userPrincipal.getId())
+                .claim("userRoles", userPrincipal.getAuthorities())
                 .setIssuedAt(new Date())
                 .setExpiration(DateUtils.addHours(new Date(), 2))
                 .signWith(key, HS512)

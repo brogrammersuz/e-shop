@@ -44,7 +44,6 @@ public class UserPrincipal implements UserDetails {
                 .build();
     }
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;

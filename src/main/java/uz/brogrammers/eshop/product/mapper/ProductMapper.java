@@ -9,7 +9,7 @@ public class ProductMapper {
     public static ProductModel mapToModel(Product entity){
         return ProductModel.builder()
                 .id(entity.getId())
-                .name(entity.getName())
+                .title(entity.getTitle())
                 .price(entity.getPrice())
                 .categoryId(entity.getCategoryId())
                 .imageUrl(entity.getImageUrl())
@@ -19,7 +19,7 @@ public class ProductMapper {
     public static Product mapToEntity(ProductModel model){
         return Product.builder()
                 .id(model.getId())
-                .name(model.getName())
+                .title(model.getTitle())
                 .price(model.getPrice())
                 .categoryId(model.getCategoryId())
                 .imageUrl(model.getImageUrl())
@@ -29,7 +29,7 @@ public class ProductMapper {
     public static ProductResponse mapToDto(ProductModel model){
         return ProductResponse.builder()
                 .id(model.getId())
-                .name(model.getName())
+                .title(model.getTitle())
                 .price(model.getPrice())
                 .categoryId(model.getCategoryId())
                 .imageUrl(model.getImageUrl())
