@@ -47,13 +47,13 @@ public class ProductController {
                            @RequestParam BigDecimal price, @RequestParam Integer categoryId) throws FileNotFoundException {
 
         Category category = categoryService.findById(categoryId).orElseThrow(() -> new IllegalArgumentException("Invalid category is selected"));
-        var imageUrl = fileStorageService.storeFile(file);
+        var fileName = fileStorageService.storeFile(file);
 
         var productModel = ProductModel.builder()
                 .categoryId(categoryId)
                 .title(title)
                 .price(price)
-                .imageUrl(imageUrl)
+                .imageUrl("http://192.168.0.115:8080/api/files/download/"+fileName)
                 .build();
 
         productService.saveProduct(productModel);
@@ -85,7 +85,7 @@ public class ProductController {
                 .title(title)
                 .price(price)
                 .categoryId(categoryId)
-                .imageUrl(file != null ? "http://localhost:8081/api/files/download/" + fileName : oldProduct.getImageUrl())
+                .imageUrl(file != null ? "http://192.168.0.115:8080/api/files/download/" + fileName : oldProduct.getImageUrl())
                 .build();
 
         this.productService.saveProduct(productModel);

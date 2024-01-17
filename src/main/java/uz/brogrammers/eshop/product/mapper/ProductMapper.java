@@ -31,7 +31,7 @@ public class ProductMapper {
                 .id(model.getId())
                 .title(model.getTitle())
                 .price(model.getPrice())
-                .categoryId(model.getCategoryId())
+                .category(model.getCategoryId())
                 .imageUrl(model.getImageUrl())
                 .build();
     }

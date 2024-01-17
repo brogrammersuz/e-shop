@@ -1,6 +1,8 @@
 package uz.brogrammers.eshop.common.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -49,6 +51,26 @@ public class FileStorageService {
             throw new FileNotFoundException("Couldn't store file " + fileName + ". Please try again!");
         }
     }
+
+
+    @SuppressWarnings("unused")
+    public Resource loadFileAsResource(String fileName) throws FileNotFoundException {
+        try {
+            Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
+
+            if(resource.exists()) {
+                return resource;
+            }else {
+                throw new FileNotFoundException("File not found "+ fileName);
+            }
+        }catch(MalformedURLException ex) {
+            throw new FileNotFoundException("File not found "+fileName);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public void deleteFile(String fileName) throws FileNotFoundException {
         try{
