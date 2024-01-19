@@ -1,8 +1,11 @@
 package uz.brogrammers.eshop.shoppingcart.rest.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import uz.brogrammers.eshop.product.entity.Product;
 
 @Data
+@AllArgsConstructor
 public class CreateCartItemRequest {
 
     private Integer id;
@@ -10,10 +13,4 @@ public class CreateCartItemRequest {
     private Integer quantity;
 
     private Integer productId;
-
-    public CreateCartItemRequest(Integer id, Integer quantity, Integer productId) {
-        this.id = id;
-        this.quantity = quantity;
-        this.productId = productId;
-    }
 }

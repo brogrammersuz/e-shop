@@ -1,5 +1,6 @@
 package uz.brogrammers.eshop.security;
 
+import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -45,7 +46,7 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
 
     private String getJwt(HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+        if (!StringUtils.isBlank(authHeader) && !authHeader.contains("null") && authHeader.startsWith("Bearer ")) {
             return authHeader.replace("Bearer ", "");
         }
 

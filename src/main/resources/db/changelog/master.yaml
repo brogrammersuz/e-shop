@@ -5,3 +5,5 @@ databaseChangeLog:
       file: classpath:/db/changelog/add_categories.sql
   - include:
       file: classpath:/db/changelog/add_roles.sql
+  - include:
+      file: classpath:/db/changelog/change_cartItem_product.sql

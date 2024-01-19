@@ -25,8 +25,19 @@ public class Cart {
             inverseJoinColumns = @JoinColumn(name = "cart_item_id"))
     private Set<CartItem> items = new HashSet<>();
 
-    public void removeItems(){
+    public Cart removeItems(){
         this.items.clear();
+        return this;
+    }
+
+    public Cart removeItem(CartItem item) {
+        this.items.remove(item);
+        return this;
+    }
+
+    public Cart addItem(CartItem item) {
+        this.items.add(item);
+        return this;
     }
 
 }

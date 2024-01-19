@@ -2,10 +2,8 @@ package uz.brogrammers.eshop.shoppingcart.entity;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import uz.brogrammers.eshop.product.entity.Product;
 
 @Entity
 @Table(name = "cart_item")
@@ -13,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Getter
+@Setter
 public class CartItem {
 
     @Id
@@ -22,6 +21,9 @@ public class CartItem {
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    @Column(name = "product_id", nullable = false)
-    private Integer productId;
+    @OneToOne(fetch=FetchType.EAGER)
+    @JoinTable(name="cart_item_product",
+            joinColumns = @JoinColumn(name ="item_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private Product product;
 }

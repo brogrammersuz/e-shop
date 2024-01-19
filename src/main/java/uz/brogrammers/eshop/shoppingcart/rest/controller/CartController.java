@@ -1,9 +1,9 @@
 package uz.brogrammers.eshop.shoppingcart.rest.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
+import uz.brogrammers.eshop.product.mapper.ProductMapper;
+import uz.brogrammers.eshop.product.model.ProductModel;
 import uz.brogrammers.eshop.product.service.ProductService;
 import uz.brogrammers.eshop.shoppingcart.entity.Cart;
 import uz.brogrammers.eshop.shoppingcart.entity.CartItem;
@@ -14,6 +14,7 @@ import uz.brogrammers.eshop.shoppingcart.service.CartService;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/shopping-cart")
@@ -25,10 +26,9 @@ public class CartController {
     private final CartItemService cartItemService;
 
     @GetMapping("/{id}")
-    public Cart getById(@PathVariable Integer id) {
-        System.out.println(id);
-        return cartService.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    public Cart getShoppingCartById(@PathVariable Integer id) {
+
+        return cartService.findById(id).orElse(null);
     }
 
     @GetMapping("/")
@@ -37,87 +37,97 @@ public class CartController {
     }
 
     @PostMapping("/")
-    public Cart create() {
+    public Cart createShoppingCart() {
 
         Cart cart = new Cart();
         cart.setCreated(ZonedDateTime.now());
 
         return cartService.save(cart);
+
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) {
+    public void deleteShoppingCart(@PathVariable Integer id) {
+
         cartService.deleteById(id);
+
     }
 
     @GetMapping("/{cartId}/items/{productId}")
     public CreateCartItemRequest getShoppingCartItem(@PathVariable("cartId") Integer cartId,
                                                      @PathVariable("productId") Integer productId) {
-        Set<CartItem> items = cartService.findById(cartId)
-                .map(Cart::getItems)
-                .orElseThrow();
+        Set<CartItem> items = cartService.findById(cartId).orElse(null).getItems();
+        for (CartItem cartItem : items) {
+            if (cartItem.getProduct().getId() == productId) {
+                return new CreateCartItemRequest(cartItem.getId(), cartItem.getQuantity(),
+                        cartItem.getProduct().getId());
+            }
+        }
 
-        return items.stream()
-                .filter(item -> item.getProductId() == productId)
-                .map(item -> new CreateCartItemRequest(
-                        item.getId(), item.getQuantity(), item.getProductId()
-                ))
-                .findFirst()
-                .orElse(null);
+        return null;
     }
 
     @PostMapping("/{cartId}/items")
     public Cart createShoppingCartItem(@PathVariable Integer cartId,
                                        @RequestBody CreateCartItemRequest request) {
+        ProductModel product = this.productService.findById(request.getProductId()).orElse(null);
+        CartItem result;
+        if (product != null) {
+            CartItem item = new CartItem();
+            item.setQuantity(request.getQuantity());
+            item.setProduct(ProductMapper.mapToEntity(product));
+            result = cartItemService.save(item);
+            Cart cart = cartService.findById(cartId).get().addItem(result);
+            return cartService.save(cart);
+        }
 
-        Cart cart = cartService.findById(cartId).orElseThrow();
+        return null;
+    }
 
-        productService.findById(request.getProductId()).ifPresent(
-                productModel -> {
-                    CartItem item = CartItem.builder()
-                            .quantity(request.getQuantity())
-                            .productId(request.getProductId())
-                            .build();
+    @PutMapping("/{cartId}/items/{productId}")
+    public Cart updateShoppingCartItem(@PathVariable Integer cartId, @PathVariable Integer productId,
+                                       @RequestBody CreateCartItemRequest request) {
+        Set<CartItem> items = cartService.findById(cartId).get().getItems();
+        for (CartItem item : items) {
+            if (item.getProduct().getId() == productId) {
+                item.setQuantity(request.getQuantity());
+                cartItemService.save(item);
+            }
+        }
 
-                    var shoppingCartItem = cartItemService.save(item);
-                    cart.getItems().add(shoppingCartItem);
-                    cartService.save(cart);
-                }
-        );
-
-        return cart;
+        return cartService.findById(cartId).get();
     }
 
     @DeleteMapping("/{cartId}/items/{productId}")
-    public Cart deleteCartItem(@PathVariable Integer cartId,
-                               @PathVariable Integer productId) {
+    public Cart deleteShoppingCartItem(@PathVariable Integer cartId, @PathVariable Integer productId) {
+        Cart cart = cartService.findById(cartId).get();
+        if (cart != null) {
+            Set<CartItem> items = cart.getItems();
+            List<CartItem> curItems = items.stream().filter(item -> item.getProduct().getId().equals(productId)).collect(Collectors.toList());
 
-        var cart = cartService.findById(cartId)
-                .orElseThrow();
+            for (CartItem item : curItems) {
+                cart = cart.removeItem(item);
+                cartItemService.delete(item);
+            }
+        }
 
-        cart.getItems().stream()
-                .filter(item -> item.getProductId() == productId)
-                .forEach(item -> {
-                    cart.getItems().remove(item);
-                    cartItemService.delete(item);
-                    cartService.save(cart);
-                });
+        return cartService.save(cart);
 
-        return cart;
     }
 
     @DeleteMapping("/{cartId}/clear")
-    public Cart clearShoppingCart(@PathVariable Integer cartId){
-        Cart cart = cartService.findById(cartId)
-                .orElseThrow();
+    public Cart clearShoppingCart(@PathVariable Integer cartId) {
+        Cart cart = cartService.findById(cartId).get();
+        if (cart != null) {
+            Set<CartItem> items = cart.getItems();
+            cart = cart.removeItems();
 
-        cart.removeItems();
-        cartService.save(cart);
+            for (CartItem item : items) {
+                cartItemService.delete(item);
+            }
+        }
 
-        cart.getItems()
-                .forEach(item -> cartItemService.delete(item));
-
-        return cart;
+        return cartService.save(cart);
     }
 
 }

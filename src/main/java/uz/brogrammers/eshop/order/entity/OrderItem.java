@@ -2,6 +2,7 @@ package uz.brogrammers.eshop.order.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import uz.brogrammers.eshop.product.entity.Product;
 
 import java.math.BigDecimal;
 
@@ -24,7 +25,10 @@ public class OrderItem {
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 
-    @Column(name = "product_id", nullable = false)
-    private Integer productId;
+    @OneToOne(fetch=FetchType.EAGER)
+    @JoinTable(name="order_item_product",
+            joinColumns = @JoinColumn(name ="item_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private Product product;
 
 }

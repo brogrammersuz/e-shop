@@ -5,8 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import uz.brogrammers.eshop.user.entity.User;
 
-import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,10 +24,13 @@ public class Order {
     private Integer id;
 
     @Column(name = "created", nullable = false)
-    private ZonedDateTime created;
+    private Date created;
 
-    @Column(name = "user_id", nullable = false)
-    private Integer userId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinTable(name = "order_user",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private User user;
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "orders_order_items",
