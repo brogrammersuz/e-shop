@@ -53,7 +53,7 @@ public class ProductController {
                 .categoryId(categoryId)
                 .title(title)
                 .price(price)
-                .imageUrl("http://192.168.0.115:8080/api/files/download/"+fileName)
+                .imageUrl("http://192.168.0.100:8080/api/files/download/"+fileName)
                 .build();
 
         productService.saveProduct(productModel);
@@ -85,7 +85,7 @@ public class ProductController {
                 .title(title)
                 .price(price)
                 .categoryId(categoryId)
-                .imageUrl(file != null ? "http://192.168.0.115:8080/api/files/download/" + fileName : oldProduct.getImageUrl())
+                .imageUrl(file != null ? "http://192.168.0.100:8080/api/files/download/" + fileName : oldProduct.getImageUrl())
                 .build();
 
         this.productService.saveProduct(productModel);

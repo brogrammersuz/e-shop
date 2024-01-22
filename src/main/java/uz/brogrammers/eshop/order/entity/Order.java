@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import uz.brogrammers.eshop.shipping.entity.Shipping;
 import uz.brogrammers.eshop.user.entity.User;
 
 import java.util.Date;

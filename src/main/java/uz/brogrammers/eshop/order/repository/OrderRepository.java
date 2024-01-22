@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import uz.brogrammers.eshop.order.entity.Order;
+import uz.brogrammers.eshop.user.entity.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,14 +13,8 @@ import java.util.Optional;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 
-    @Query(value = "Select * from `orders` where user_id = :userId", nativeQuery = true)
-    List<Order> findAllByUserId(@Param("userId") Integer userId);
+    List<Order> findAllByUser(User user);
 
-    @Query(value = "Select * from `orders` where id= :id", nativeQuery = true)
-    Optional<Order> findById(@Param("id") Integer id);
-
-    @Override
-    @Query(value = "Select * from `orders`", nativeQuery = true)
-    List<Order> findAll();
+    Optional<Order> findById(Integer id);
 
 }

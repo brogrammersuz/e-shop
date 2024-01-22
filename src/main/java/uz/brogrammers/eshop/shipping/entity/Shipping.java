@@ -4,12 +4,14 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
 @Table(name = "shipping")
 @AllArgsConstructor
 @Builder
+@NoArgsConstructor
 public class Shipping {
 
     @Id

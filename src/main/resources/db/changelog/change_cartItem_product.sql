@@ -49,8 +49,8 @@ CREATE TABLE `eshop`.`order_item_product` (
 
 -- changeset Khasanboy-Akbarov:remove-userId-from-order-table
 -- preconditions onFail:MARK_RAN
--- precondition-sql-check expectedResult:1 select count(*) from information_schema.COLUMNS WHERE TABLE_SCHEMA = 'eshop' AND TABLE_NAME='order' AND COLUMN_NAME ='user_id';
-ALTER TABLE `eshop`.`order` DROP COLUMN `user_id`;
+-- precondition-sql-check expectedResult:1 select count(*) from information_schema.COLUMNS WHERE TABLE_SCHEMA = 'eshop' AND TABLE_NAME='orders' AND COLUMN_NAME ='user_id';
+ALTER TABLE `eshop`.`orders` DROP COLUMN `user_id`;
 
 -- changeset Khasanboy-Akbarov:create-order_user-table
 -- preconditions onFail:MARK_RAN
